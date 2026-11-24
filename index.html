@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charging, Owner-First</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE product launch page: confident, quiet, engineered; the candidate's own pitch, not a brand site
+   IDEA an EV maker's product page, applied to a PM's analysis: hero, specs, carousel, "how it works"
+   PICTURE dark hero with a drawn charging pillar, parking bays and a scooter on charge
+   COLOUR near-black #0f1112 hero and footer, grey #ececec sections, white cards, green #31a93e accent
+   TYPE Inter Tight for display, Inter for text
+   LAYOUT sticky pill nav; hero headline left with the illustration filling the right; phone stacks headline, picture, figures */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0f1112);--sec:light-dark(#ececec,#16191b);--card:light-dark(#ffffff,#1d2124);--ink:light-dark(#191c1f,#eef1f2);--mut:light-dark(#5c6470,#9aa3ab);--rule:light-dark(#dcdfe2,#2a2f33);--g:#31a93e;--gd:light-dark(#23802e,#5fd06b);--dark:#0f1112}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;letter-spacing:-.02em;line-height:1.08;margin:0;text-wrap:balance}
+h1{font-size:clamp(36px,5.4vw,64px);font-weight:600}
+h2{font-size:clamp(28px,3.6vw,44px);font-weight:600;margin-bottom:12px}
+h3{font-size:20px;font-weight:600;margin-bottom:8px}
+p{margin:0 0 12px;max-width:68ch}
+a{color:var(--gd)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px)}
+.sec{padding:clamp(48px,7vw,96px) 0}
+.grey{background:var(--sec)}
+.lead{font-size:18px;color:var(--mut)}
+.note{font-size:13px;color:var(--mut)}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+nav .wrap{display:flex;align-items:center;gap:20px;min-height:64px;flex-wrap:wrap}
+.brand{font:600 17px "Inter Tight",sans-serif;text-decoration:none;color:var(--ink);margin-right:auto}
+.brand span{color:var(--gd)}
+.links{display:flex;gap:4px;flex-wrap:wrap}
+.links a{color:var(--ink);text-decoration:none;font-size:15px;padding:10px 12px;border-radius:44px}
+.links a:hover{background:var(--sec)}
+.pill{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:44px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.pill.solid{background:var(--g);color:#fff}
+.pill.solid:hover{background:#2a9135}
+.pill.ghost{border-color:currentColor;color:inherit;background:transparent}
+.hero{position:relative;background:#0f1112 url(img/p1.jpg) center 35%/cover no-repeat;color:#f2f4f5;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,12,13,.94) 0%,rgba(10,12,13,.82) 42%,rgba(10,12,13,.25) 75%,rgba(10,12,13,.1) 100%),linear-gradient(0deg,rgba(10,12,13,.95) 0%,rgba(10,12,13,0) 38%)}
+.hero>*{position:relative}
+.credit{font-size:12px;color:var(--mut);margin-top:6px}
+.hero .credit{position:absolute;right:max(4vw,16px);bottom:10px;color:#9aa3ab;margin:0;font-size:12px}
+.hero .stats{padding-bottom:18px}
+.ph{border-radius:16px;overflow:hidden;background:var(--sec)}
+.ph img{display:block;width:100%;height:100%;object-fit:cover}
+.fcard .ph{aspect-ratio:16/10;margin:-4px -4px 6px}
+.banner{position:relative;border-radius:20px;overflow:hidden;min-height:480px;display:grid;align-content:end;margin-top:24px}
+.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.banner::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,12,13,.92) 0%,rgba(10,12,13,.35) 55%,rgba(10,12,13,0) 100%)}
+.banner .tf{position:relative;z-index:1;width:100%;padding:24px;margin:0}
+.banner .tf .card{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:#fff}
+.banner .tf .card b{color:#7fdc8a}
+.banner .tf .card span{color:#d5dadd}
+.sidepic{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start}
+.sticky{position:sticky;top:84px;display:grid;gap:14px}
+.pinout{background:var(--card);border-radius:16px;padding:16px;display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:center}
+.pinout img{width:120px;height:auto;background:#fff;border-radius:10px}
+.pinout p{margin:0;font-size:14px;color:var(--mut)}
+.pinout b{color:var(--ink);display:block;font-size:15px;margin-bottom:4px}
+.nodepic{border-radius:16px;overflow:hidden;aspect-ratio:16/9;margin-bottom:16px}
+.nodepic img{width:100%;height:100%;object-fit:cover;display:block}
+.hero .hw{display:grid;min-height:min(78vh,720px);grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(20px,4vw,48px);align-items:center;padding-top:clamp(40px,6vw,80px);padding-bottom:clamp(32px,5vw,64px)}
+.hero p{color:#b8c0c6;font-size:18px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.hero .note{color:#8b949a;margin-top:18px}
+.art{position:relative;aspect-ratio:1.15;min-height:300px}
+.art svg{position:absolute;inset:0;width:100%;height:100%}
+.pulse{animation:pl 2.4s ease-in-out infinite}
+@keyframes pl{0%,100%{opacity:.25}50%{opacity:1}}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #2a2f33}
+.stats div{padding:22px 16px 26px 0}
+.stats b{display:block;font:600 clamp(30px,3.6vw,44px)/1 "Inter Tight",sans-serif;color:#fff;white-space:nowrap}
+.stats span{font-size:14px;color:#9aa3ab}
+.card{background:var(--card);border-radius:16px;padding:clamp(18px,2.4vw,28px)}
+.card.grey{background:var(--sec)}
+.head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:24px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--mut)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.rows{display:grid;gap:9px}
+.row{display:grid;grid-template-columns:minmax(0,21em) minmax(0,1fr) 2.6em;gap:14px;align-items:center;font-size:15px;cursor:default}
+.row small{display:block;font-size:13px;color:var(--mut)}
+.track{display:flex;gap:2px;height:24px}
+.seg:first-child{border-radius:6px 0 0 6px}.seg:last-child{border-radius:0 6px 6px 0}.seg:only-child{border-radius:6px}
+.s1{background:var(--g)}.s2{background:light-dark(#b9e3be,#285a2e)}
+.row .n{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.row:hover .lab{color:var(--gd)}
+#tip{position:fixed;pointer-events:none;background:#0f1112;color:#fff;font-size:13px;padding:7px 11px;border-radius:10px;opacity:0;transition:opacity .12s;max-width:270px;z-index:30}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.fcard{display:flex;flex-direction:column;gap:10px}
+.fcard .big{font:600 clamp(44px,5vw,60px)/1 "Inter Tight",sans-serif;color:var(--gd)}
+.fcard .big small{font-size:16px;color:var(--mut);font-weight:500;margin-left:6px}
+.fcard q{font-size:16px;font-style:italic;color:var(--ink);quotes:"“" "”";border-left:3px solid var(--g);padding-left:12px}
+.fcard .so{font-size:13px;color:var(--mut)}
+.fcard .imp{margin-top:auto;padding-top:12px;border-top:1px solid var(--rule);font-size:15px}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(260px,300px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin}
+.qc{scroll-snap-align:start;background:var(--card);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;text-decoration:none;color:var(--ink);min-height:230px;border:1px solid transparent}
+.qc:hover,.qc:focus-visible{border-color:var(--g);outline:none}
+.qc .tag{align-self:flex-start;font-size:12px;font-weight:600;color:var(--gd);background:light-dark(#e6f5e8,#183a1c);padding:5px 10px;border-radius:44px}
+.qc p{font:500 19px/1.35 "Inter Tight",sans-serif;margin:0}
+.qc span{margin-top:auto;font-size:13px;color:var(--mut)}
+.arrows{display:flex;gap:8px}
+.arrows button{width:46px;height:46px;border-radius:50%;border:1px solid var(--rule);background:var(--card);color:var(--ink);font-size:20px;cursor:pointer}
+.arrows button:hover{border-color:var(--g)}
+.darkband{background:var(--dark);color:#eef1f2}
+.darkband .lead{color:#9aa3ab}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.ctl{display:grid;gap:16px;margin-top:18px}
+.ctl label{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;font-size:15px;color:#cfd5d9}
+.ctl output{font-weight:600;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
+input[type=range]{grid-column:1/-1;width:100%;height:30px;accent-color:var(--g)}
+input:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--g);outline-offset:3px}
+.meter{background:#1d2124;border-radius:16px;padding:clamp(20px,3vw,32px)}
+.meter .ratio{font:600 clamp(64px,10vw,120px)/.95 "Inter Tight",sans-serif;color:var(--g)}
+.bars{display:grid;gap:10px;margin:22px 0 14px}
+.bars div{height:46px;border-radius:12px;display:flex;align-items:center;padding:0 14px;font-weight:600;font-size:14px;white-space:nowrap;min-width:fit-content;transition:width .3s}
+.b1{background:#3a4146;color:#fff}.b2{background:var(--g);color:#fff}
+.meter .note{color:#8b949a}
+.acc{display:grid;gap:10px}
+.acc details{background:var(--card);border-radius:16px;padding:0 22px}
+.acc summary{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;font-weight:600;font-size:17px;list-style:none}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+";font-size:24px;color:var(--gd);font-weight:400}
+.acc details[open] summary::after{content:"–"}
+.acc .body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;padding:0 0 20px;font-size:15px}
+.acc .body b{display:block;font-size:13px;color:var(--mut);font-weight:600;margin-bottom:4px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.ns{background:var(--g);color:#fff;border-radius:16px;padding:24px}
+.ns b{display:block;font:600 24px/1.15 "Inter Tight",sans-serif;margin-bottom:6px}
+.tree{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+.tree div{background:var(--card);border-radius:14px;padding:14px 16px;font-size:14px;color:var(--mut)}
+.tree b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+.ship{display:grid;gap:10px}
+.ship div{background:var(--card);border-radius:14px;padding:16px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px}
+.ship i{font-style:normal;width:34px;height:34px;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;font-weight:700}
+.ship p{margin:0;font-size:15px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-size:13px;color:var(--mut);font-weight:600}
+.tbl{background:var(--card);border-radius:16px;padding:6px 10px;overflow-x:auto}
+.tf{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:24px}
+.tf .card b{display:block;font:600 clamp(32px,3.6vw,44px)/1 "Inter Tight",sans-serif;color:var(--gd);white-space:nowrap;margin-bottom:8px}
+.tf .card span{font-size:14px;color:var(--mut)}
+.creds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.creds .card b{display:block;font:600 30px/1 "Inter Tight",sans-serif;color:var(--gd);margin-bottom:8px}
+.creds .card p{font-size:15px;margin:0}
+.data summary{min-height:56px;display:flex;align-items:center;cursor:pointer;font-weight:600}
+select{font:16px Inter,sans-serif;padding:10px 14px;border:1px solid var(--rule);border-radius:44px;background:var(--card);color:var(--ink);min-height:46px}
+footer{background:var(--dark);color:#cfd5d9}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;padding-top:56px;padding-bottom:40px}
+footer h2{color:#fff}
+footer a{color:#7fdc8a}
+footer .note{color:#8b949a}
+@media(max-width:900px){.sidepic{grid-template-columns:minmax(0,1fr)}.sticky{position:static}.hero::before{background:linear-gradient(0deg,rgba(10,12,13,.97) 0%,rgba(10,12,13,.86) 50%,rgba(10,12,13,.72) 100%)}.banner .tf{grid-template-columns:repeat(2,minmax(0,1fr))}.hero .hw,.calc,footer .wrap{grid-template-columns:minmax(0,1fr)}.three,.creds{grid-template-columns:minmax(0,1fr)}.tf{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:minmax(0,1fr)}.links{display:none}}
+@media(max-width:600px){.banner{min-height:0}.banner .tf{grid-template-columns:minmax(0,1fr);padding-top:200px}.pinout{grid-template-columns:90px minmax(0,1fr)}.pinout img{width:90px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.row{grid-template-columns:minmax(0,1fr) 2.4em}.row .track{grid-column:1/-1;grid-row:2}.row .n{grid-row:1;grid-column:2}.acc .body,.tree{grid-template-columns:minmax(0,1fr)}.tf{grid-template-columns:minmax(0,1fr)}table{font-size:13px}th,td{padding:8px 6px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--rule)}.stack td{border:0;padding:3px 0}.stack td::before{content:attr(data-l);display:block;font-size:12px;color:var(--mut)}}
+@media(prefers-reduced-motion:reduce){.pulse{animation:none}html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top">Shantanu Patil <span>/ Charging</span></a>
+  <div class="links"><a href="#findings">Findings</a><a href="#register">Risk register</a><a href="#voices">Owner voices</a><a href="#node">AtherNode</a><a href="#build">What I'd build</a><a href="#me">About me</a></div>
+  <a class="pill solid" href="#contact">Get in touch</a>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap hw">
+  <div>
+    <h1>Most charging pain sits between two teams. That's where a program manager works.</h1>
+    <p style="margin-top:18px">I coded 179 public owner posts from Ather's community forum into 12 themes, then traced each one to the sub-systems that fail, the teams that have to align on the fix, and the validation gate that should have caught it. I spent 3 years at ARAI on the other side of those gates, testing and signing off Ather's own chargers.</p>
+    <div class="cta"><a class="pill solid" href="#register">See the risk register</a><a class="pill ghost" href="#node">Try the load model</a></div>
+    <p class="note">Independent analysis by Shantanu Patil. Not affiliated with or endorsed by Ather Energy. Public sources only.</p>
+  </div>
+  <div aria-hidden="true"></div>
+</div>
+<div class="wrap"><div class="stats" id="stats"></div></div>
+<p class="credit">Photo: Ather Energy / Unsplash</p>
+</header>
+
+<section class="sec grey" id="findings"><div class="wrap">
+  <div class="head"><div><h2>Where owner pain concentrates</h2><p class="lead">The 179 owner posts, coded by hand into 12 themes. Hover over or tap a bar for upvotes.</p></div>
+  <div class="legend"><span><i class="sw s1"></i>2025–26</span><span><i class="sw s2"></i>2018–24</span></div></div>
+  <div class="card"><div class="rows" id="rows"></div></div>
+  <p class="note" style="margin-top:14px">Source: 651 posts pulled from forum.atherenergy.com (Aug 2018 to Oct 2026). I kept 179 owner posts, dropping staff replies and off-topic posts, and gave each one primary theme by hand. The sample is directional, not representative. The 2026 wallet thread is the most active recent thread, so payments are over-weighted.</p>
+</div></section>
+
+<section class="sec" id="register"><div class="wrap">
+  <h2>From complaints to a program risk register</h2>
+  <p class="lead" style="margin-bottom:20px">Six themes cover 130 of the 179 posts. In five of them the failure sits at the boundary between two teams, such as charger firmware and the vehicle's BMS, or the app and a payment partner. That boundary is what a program manager owns, in a charging program or a scooter program.</p>
+  <div class="tbl"><table class="stack"><thead><tr><th>Theme</th><th>Owner posts</th><th>Where it breaks</th><th>Teams that must align</th><th>Gate that should catch it</th></tr></thead><tbody><tr><td><b>Wallet &amp; payment trust</b></td><td style="white-space:nowrap"><b>37</b><br><span class="note">33 since 2025</span></td><td>App, payments backend, payment partner</td><td>Software, payments partner, customer support</td><td>Failure-injection test of top-up, refund and balance expiry before each app release</td></tr><tr><td><b>Society permission &amp; shared metering</b></td><td style="white-space:nowrap"><b>40</b><br><span class="note">0 since 2025</span></td><td>Not a product fault: install process and building wiring</td><td>Charging business development, install partners, legal</td><td>Site-survey and load sign-off checklist before any install is committed</td></tr><tr><td><b>Interoperability &amp; compatibility</b></td><td style="white-space:nowrap"><b>23</b><br><span class="note">15 since 2025</span></td><td>Charger&ndash;vehicle signalling across models, generations and partner chargers</td><td>Charger hardware and firmware, vehicle electrical, partner OEMs</td><td>Interop matrix run for every new vehicle or charger variant (the tests I ran at ARAI)</td></tr><tr><td><b>Session won't start or drops</b></td><td style="white-space:nowrap"><b>12</b><br><span class="note">6 since 2025</span></td><td>CP/PP/CAN handshake, connector lock, backend authorisation</td><td>Charger firmware, vehicle BMS/VCU, cloud</td><td>Handshake and lock-cycle tests at temperature extremes, plus IS 17017 conformance</td></tr><tr><td><b>Charger downtime</b></td><td style="white-space:nowrap"><b>12</b><br><span class="note">4 since 2025</span></td><td>Field hardware and maintenance response</td><td>Service operations, hardware reliability</td><td>Field-reliability review at the pilot gate, with an uptime target per site</td></tr><tr><td><b>Home charger firmware and OTA</b></td><td style="white-space:nowrap"><b>6</b><br><span class="note">6 since 2025</span></td><td>Over-the-air release process</td><td>Firmware, release management</td><td>Staged OTA rollout with a tested rollback before fleet-wide release</td></tr></tbody></table></div>
+  <p class="note" style="margin-top:14px">Post counts come from my coding of public forum posts. The sub-systems, teams and gates are my inference from those posts and from my test-lab experience, not from Ather's internal data.</p>
+</div></section>
+
+<section class="sec" style="border-top:1px solid var(--rule)"><div class="wrap">
+  <h2 style="margin-bottom:24px">Three findings that change what I'd build</h2>
+  <div class="three">
+    <div class="card grey fcard">
+      <div class="ph"><img src="img/p6.jpg" alt="Residential underground parking with marked bays" loading="lazy"></div>
+      <div class="big">40<small>posts</small></div>
+      <h3>Semi-private charging is a permission problem first</h3>
+      <p>Owners describe months of negotiation with their housing society, sockets removed, and fear over fire risk and metering. The society committee decides, and the builder controls the wiring.</p>
+      <q>my society is not allowing me to install charging socket</q><span class="so">Forum post, Jan 2021</span>
+      <p class="imp">Implication: society onboarding is a product of its own. Give the committee a one-page load and safety pack for its general meeting.</p>
+    </div>
+    <div class="card grey fcard">
+      <div class="ph"><img src="img/p8.jpg" alt="Hand plugging a charging connector into a vehicle" loading="lazy"></div>
+      <div class="big">49<small>posts</small></div>
+      <h3>Trust breaks at the session start and at the money</h3>
+      <p>Owners report holding the connector until it locks and charger screens stuck on "initialising". 33 of the 37 wallet posts came after the 2026 prepaid change.</p>
+      <q>we need to hold the connector until its locked at the grids</q><span class="so">Forum post, Feb 2025</span>
+      <p class="imp">Implication: AtherNode's society billing needs one per-session receipt that both the rider and the society can check.</p>
+    </div>
+    <div class="card grey fcard">
+      <div class="ph"><img src="img/p2.jpg" alt="Ather owner with her scooter at home" loading="lazy" style="object-position:50% 70%"></div>
+      <div class="big">302<small>upvotes</small></div>
+      <h3>At home, owners want control more than speed</h3>
+      <p>The most-upvoted post in the set asks for a custom finish time for reaching 100%, instead of the fixed 5 am.</p>
+      <q>5 am is rubbish.</q><span class="so">Forum post, May 2024</span>
+      <p class="imp">Implication: in a building with a load cap, the promise to riders is "charged by the time I leave". That's the north-star metric.</p>
+    </div>
+  </div>
+  <p class="credit">Photos: Aalo Lens, Zaptec and Ather Energy / Unsplash</p>
+</div></section>
+
+<section class="sec grey" id="voices"><div class="wrap">
+  <div class="head"><div><h2>In owners' own words</h2><p class="lead">Exact quotes, unedited, including the owners' spelling. Each card links to its source post.</p></div>
+  <div class="arrows"><button id="prev" aria-label="Previous quotes">‹</button><button id="next" aria-label="Next quotes">›</button></div></div>
+  <div class="rail" id="wall"></div>
+</div></section>
+
+<section class="sec darkband" id="node"><div class="wrap calc">
+  <div>
+    <h2>Why load management is the core economics</h2>
+    <p class="lead">If a society sizes its supply for every charger at full power, it pays for load it rarely uses. If it sizes for the energy riders actually need overnight, the requirement is far smaller. AtherNode distributes power so the building stays within its sanctioned load.</p>
+    <div class="ctl">
+      <label for="ev">Two-wheeler EV parking spots<output id="evo"></output><input id="ev" type="range" min="20" max="1000" step="10" value="200"></label>
+      <label for="km">Daily riding per scooter<output id="kmo"></output><input id="km" type="range" min="10" max="80" step="5" value="30"></label>
+      <label for="wh">Energy use<output id="who"></output><input id="wh" type="range" min="20" max="40" step="1" value="26"></label>
+      <label for="hr">Overnight charging window<output id="hro"></output><input id="hr" type="range" min="4" max="12" step="1" value="10"></label>
+      <label for="w">Charger rating<output id="wo"></output><input id="w" type="range" min="450" max="3300" step="50" value="900"></label>
+    </div>
+  </div>
+  <div>
+  <div class="nodepic"><img src="img/p5.jpg" alt="Row of wall-mounted chargers in a parking garage" loading="lazy"></div>
+  <div class="meter">
+    <div class="ratio" id="ratio"></div>
+    <p style="color:#cfd5d9;margin-top:8px">less load to sanction when charging is scheduled across the night</p>
+    <div class="bars"><div class="b1" id="kb1"></div><div class="b2" id="kb2"></div></div>
+    <p class="note">Illustrative. Default sources: 900 W is the Ather Duo's rating; about 26 Wh/km is an owner-reported figure on the forum; Ather's blog puts a full charge at 3–4 units (kWh). Real buildings add losses, diversity and four-wheeler chargers.</p>
+  </div>
+  <p class="credit" style="color:#8b949a">Photo: smart-me AG / Unsplash</p>
+  </div>
+</div></section>
+
+<section class="sec grey" id="build"><div class="wrap">
+  <h2>Corner cases I'd write into the PRD</h2>
+  <p class="lead" style="margin-bottom:24px">I tested chargers to IS 17017 on the bench; these are the failures that show up later in the field. Open a row to see the expected behaviour and the forum evidence.</p>
+  <div class="sidepic">
+    <div class="acc" id="cc"></div>
+    <div class="sticky">
+      <div class="ph" style="aspect-ratio:3/2"><img src="img/p4.jpg" alt="Ather rider in a dark tunnel" loading="lazy"></div>
+      <p class="credit" style="margin:-6px 0 0">Photo: Ather Energy / Unsplash</p>
+      <div class="pinout"><img src="img/type7.png" alt="Type 7 (LECCS) connector pinout" loading="lazy"><p><b>Every session starts on these pins</b>The Type 7 (LECCS) connector carries CP, PP and CAN signalling. A failed handshake on these lines is the "hold it till it locks" complaint seen from the inside.<br><span style="font-size:12px">Diagram: Kukunmishra, CC BY-SA 4.0, Wikimedia Commons</span></p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec"><div class="wrap two">
+  <div>
+    <h2>The charter metric</h2>
+    <div class="ns"><b>Charged-by-departure rate</b>Share of sessions that reach the rider's target charge by the time they set</div>
+    <div class="tree" id="tree"></div>
+  </div>
+  <div>
+    <h2>What I'd ship first in AtherNode</h2>
+    <div class="nodepic" style="aspect-ratio:2/1"><img src="img/p7.jpg" alt="Charging station with a digital display" loading="lazy"></div>
+    <div class="ship" id="ship"></div>
+    <p class="credit">Photo: Sevadis / Unsplash</p>
+    <p class="note" style="margin-top:12px">Not in v1: changes to public Grid pricing, or fast-charging tiers for four-wheelers.</p>
+  </div>
+</div></section>
+
+<section class="sec grey"><div class="wrap">
+  <h2>What I'd validate in my first two weeks</h2>
+  <p class="lead" style="margin-bottom:20px">These hypotheses are untested. Forum posters lean towards enthusiasts, so I'd test each one with riders, facility managers and builders before committing roadmap time.</p>
+  <div class="tbl"><table class="stack"><thead><tr><th>Hypothesis</th><th>Test</th><th>I'm wrong if</th></tr></thead><tbody id="hy"></tbody></table></div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <h2>On public charging, I've mapped India's gaps already</h2>
+  <p class="lead">EV Infra Map India is a charger-planning platform for MHI, states, DISCOMs and NHAI. It was built for the Techfest IIT Bombay EV Infra &amp; Green Mobility AI Challenge (MHI &amp; ICAT), where my team is a national finalist.</p>
+  <div class="banner"><img style="object-position:50% 85%" src="img/p3.jpg" alt="Ather riders passing the Red Fort, Delhi" loading="lazy">
+  <div class="tf">
+    <div class="card"><b>10×</b><span>gap between states in EVs per charging station (22 to 237)</span></div>
+    <div class="card"><b>5</b><span>conflicting charger counts reconciled against VAHAN registration data</span></div>
+    <div class="card"><b>0 / 6,562</b><span>PM E-DRIVE charger approvals went to high-gap Odisha, MP and Maharashtra</span></div>
+    <div class="card"><b>2030</b><span>charger demand forecast by class, a budget-led site optimiser and a live map prototype</span></div>
+  </div>
+  <p class="credit">Photo: Ather Energy / Unsplash</p>
+</div>
+</div></section>
+
+<section class="sec grey" id="me"><div class="wrap">
+  <h2 style="margin-bottom:24px">Why I can say this with some credibility</h2>
+  <div class="creds">
+    <div class="card"><b>Ather</b><p>I signed ARAI's test reports for Ather's Grid DC fast charger (IS 17017-25) and 3.3 kW AC charger (IS 17017-22-1), ran interoperability tests for Ather, and ran pre-compliance EMI/EMC tests on the Rizta during its development.</p></div>
+    <div class="card"><b>500+</b><p>EV charger compliance programmes at ARAI over 3 years for Tesla, VinFast and Tata Motors, with zero client escalations over 30 months. Signed test reports under IS 17017-25 (LEV DC fast charger) and IS 17017-22-1 (LEV AC charger).</p></div>
+    <div class="card"><b>250 kW</b><p>Tesla's first V4 Supercharger launch in India (CCS2). I mapped global standards to the IS 17017 regime to make the launch possible.</p></div>
+    <div class="card"><b>1st</b><p>DC EMC test facility for EV chargers in India, delivered in 10 months. Redesigned lab scheduling for +20% throughput and 15% shorter turnaround, and advised 15+ OEM teams on test planning.</p></div>
+    <div class="card"><b>+14.4%</b><p>Monthly profit for a manufacturing SME from an LP product-mix model in Excel Solver. Utilisation went from 70% to 91% in 12 weeks, and the CEO verified the results in writing.</p></div>
+    <div class="card"><b>AIR 1</b><p>Team Leader of a 25-person BAJA SAE team. Raised ₹3.76L from 35+ executive pitches and placed 4th of 88 worldwide in the sales round. Now a PGP-TBM student at Masters' Union on a merit scholarship.</p></div>
+    
+  </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <details class="data"><summary>Browse all 179 coded posts</summary>
+    <p style="margin:8px 0 14px"><label for="flt" class="note">Filter by theme </label><select id="flt"><option value="">All themes</option></select></p>
+    <div class="tbl"><table class="stack"><thead><tr><th>Date</th><th>Theme</th><th>Thread</th><th>Upvotes</th></tr></thead><tbody id="list"></tbody></table></div>
+  </details>
+</div></section>
+
+<footer id="contact"><div class="wrap">
+  <div>
+    <h2>Let's talk</h2>
+    <p>Shantanu Patil<br>shantanu.patil2027@mastersunion.org<br>+91 79721 72799</p>
+    <p><a href="https://www.linkedin.com/in/shantanuspatil1/">LinkedIn</a> · <a href="https://shantanuspatil2002-tech.github.io/shantanu-portfolio">Portfolio</a></p>
+  </div>
+  <div class="note">
+    <p>Independent analysis. Not affiliated with or endorsed by Ather Energy. No ARAI, client or test-report data appears on this page.</p>
+    <p>Sources: atherenergy.com/charging and /ather-node (AtherNode load management, billing sync with property apps, real-time dashboard); Ather blog, Sep 2026 (6,100+ Grid fast chargers in 370+ cities; 3–4 units per full charge). Owner quotes are short excerpts from public forum posts, each linked. Photos: Unsplash licence (Ather Energy, Aalo Lens, Zaptec, smart-me AG, Sevadis); connector diagram CC BY-SA 4.0 (Kukunmishra, Wikimedia Commons).</p>
+  </div>
+</div></footer>
+
+<div id="tip" role="status"></div>
+<script>
+{
+const D = [{"id":313,"d":"2018-08-21","c":"A","l":1,"t":"Ownership Journey Towards your Ather","u":"https://forum.atherenergy.com/t/49/42"},{"id":10065,"d":"2019-06-13","c":"A","l":4,"t":"Deliveries: Bengaluru","u":"https://forum.atherenergy.com/t/305/1775"},{"id":13904,"d":"2019-07-12","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/1"},{"id":15387,"d":"2019-07-31","c":"A","l":0,"t":"Setting up Your Home Charging Point","u":"https://forum.atherenergy.com/t/295/209"},{"id":15810,"d":"2019-08-05","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/3"},{"id":17150,"d":"2019-08-11","c":"A","l":6,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/4"},{"id":22589,"d":"2019-10-18","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/14"},{"id":25052,"d":"2019-11-24","c":"A","l":2,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/39"},{"id":25200,"d":"2019-11-27","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/41"},{"id":25644,"d":"2019-12-04","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/47"},{"id":25657,"d":"2019-12-05","c":"A","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/51"},{"id":26735,"d":"2019-12-21","c":"A","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/62"},{"id":26737,"d":"2019-12-21","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/63"},{"id":42511,"d":"2020-08-14","c":"A","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/67"},{"id":42518,"d":"2020-08-14","c":"A","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/71"},{"id":48213,"d":"2020-10-05","c":"A","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/75"},{"id":48216,"d":"2020-10-05","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/77"},{"id":48530,"d":"2020-10-08","c":"A","l":5,"t":"EV charging support for high rise apartments","u":"https://forum.atherenergy.com/t/9799/1"},{"id":48592,"d":"2020-10-09","c":"A","l":13,"t":"EV charging support for high rise apartments","u":"https://forum.atherenergy.com/t/9799/9"},{"id":48596,"d":"2020-10-09","c":"A","l":3,"t":"EV charging support for high rise apartments","u":"https://forum.atherenergy.com/t/9799/10"},{"id":48902,"d":"2020-10-12","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/89"},{"id":48905,"d":"2020-10-12","c":"A","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/90"},{"id":49479,"d":"2020-10-18","c":"A","l":6,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/96"},{"id":58434,"d":"2021-01-07","c":"A","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/101"},{"id":58591,"d":"2021-01-09","c":"A","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/110"},{"id":63899,"d":"2021-02-17","c":"A","l":6,"t":"Charging by connecting to Electric Meter in Housing Society","u":"https://forum.atherenergy.com/t/15252/1"},{"id":64142,"d":"2021-02-18","c":"A","l":5,"t":"Charging by connecting to Electric Meter in Housing Society","u":"https://forum.atherenergy.com/t/15252/5"},{"id":71852,"d":"2021-04-02","c":"A","l":1,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/112"},{"id":177001,"d":"2022-12-02","c":"A","l":1,"t":"Ather Grid in Mumbai","u":"https://forum.atherenergy.com/t/14138/96"},{"id":313237,"d":"2023-05-22","c":"A","l":4,"t":"Ask an Ather Owner!","u":"https://forum.atherenergy.com/t/7843/345"},{"id":16922,"d":"2019-08-09","c":"B","l":1,"t":"Home Charging","u":"https://forum.atherenergy.com/t/293/524"},{"id":22247,"d":"2019-10-15","c":"B","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/10"},{"id":22551,"d":"2019-10-18","c":"B","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/12"},{"id":24107,"d":"2019-11-09","c":"B","l":0,"t":"Help convince our apartment association","u":"https://forum.atherenergy.com/t/1915/30"},{"id":48542,"d":"2020-10-08","c":"B","l":5,"t":"EV charging support for high rise apartments","u":"https://forum.atherenergy.com/t/9799/5"},{"id":63909,"d":"2021-02-17","c":"B","l":1,"t":"Charging by connecting to Electric Meter in Housing Society","u":"https://forum.atherenergy.com/t/15252/4"},{"id":64886,"d":"2021-02-24","c":"B","l":2,"t":"EV charging support for high rise apartments","u":"https://forum.atherenergy.com/t/9799/27"},{"id":100128,"d":"2021-11-23","c":"B","l":10,"t":"Charging by connecting to Electric Meter in Housing Society","u":"https://forum.atherenergy.com/t/15252/6"},{"id":185203,"d":"2023-01-08","c":"B","l":2,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/796"},{"id":202368,"d":"2023-03-06","c":"B","l":3,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/5"},{"id":101404,"d":"2021-12-14","c":"C","l":0,"t":"Range enhancement","u":"https://forum.atherenergy.com/t/19977/20"},{"id":374525,"d":"2023-07-26","c":"C","l":22,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/9"},{"id":480557,"d":"2023-12-29","c":"C","l":4,"t":"Unreliability of ather grid","u":"https://forum.atherenergy.com/t/227909/1"},{"id":505663,"d":"2024-02-03","c":"C","l":11,"t":"A fast charger to all the need in community","u":"https://forum.atherenergy.com/t/239652/1"},{"id":585363,"d":"2024-05-31","c":"C","l":2,"t":"Ather grid - Resource Being WASTED","u":"https://forum.atherenergy.com/t/276686/2"},{"id":603939,"d":"2024-07-17","c":"C","l":2,"t":"Ather Grid in Mumbai","u":"https://forum.atherenergy.com/t/14138/118"},{"id":604083,"d":"2024-07-18","c":"C","l":7,"t":"Tips on how to get good range from your Ather 450X","u":"https://forum.atherenergy.com/t/14059/905"},{"id":653116,"d":"2024-12-31","c":"C","l":2,"t":"Ather grid charging issue","u":"https://forum.atherenergy.com/t/38677/4"},{"id":675318,"d":"2025-03-14","c":"C","l":3,"t":"Find your answers on 450X, Series 1, Purchase, Ather Grid here","u":"https://forum.atherenergy.com/t/9412/37"},{"id":691884,"d":"2025-05-16","c":"C","l":1,"t":"New Ather grids","u":"https://forum.atherenergy.com/t/303969/12"},{"id":834136,"d":"2026-03-06","c":"C","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/14"},{"id":931410,"d":"2026-07-01","c":"C","l":1,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/907"},{"id":123576,"d":"2022-05-01","c":"D","l":2,"t":"New portable charger doesn't support Gen1 450s","u":"https://forum.atherenergy.com/t/44272/5"},{"id":424775,"d":"2023-10-05","c":"D","l":1,"t":"Charging issues","u":"https://forum.atherenergy.com/t/199658/6"},{"id":433901,"d":"2023-10-16","c":"D","l":1,"t":"Atherstack 5.9","u":"https://forum.atherenergy.com/t/197906/145"},{"id":447153,"d":"2023-10-31","c":"D","l":6,"t":"Charging issues","u":"https://forum.atherenergy.com/t/199658/12"},{"id":492296,"d":"2024-01-16","c":"D","l":1,"t":"Charging issues","u":"https://forum.atherenergy.com/t/199658/18"},{"id":633431,"d":"2024-10-23","c":"D","l":2,"t":"Vida Charger Bad Experience","u":"https://forum.atherenergy.com/t/239395/17"},{"id":667095,"d":"2025-02-12","c":"D","l":3,"t":"Ather Rizta design Issues","u":"https://forum.atherenergy.com/t/291388/226"},{"id":730584,"d":"2025-09-06","c":"D","l":4,"t":"Charging issues","u":"https://forum.atherenergy.com/t/199658/54"},{"id":784546,"d":"2025-12-08","c":"D","l":2,"t":"Ask an Ather Owner!","u":"https://forum.atherenergy.com/t/7843/523"},{"id":870022,"d":"2026-04-16","c":"D","l":0,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/45"},{"id":870451,"d":"2026-04-16","c":"D","l":2,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/900"},{"id":930533,"d":"2026-06-30","c":"D","l":2,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/906"},{"id":100853,"d":"2021-12-03","c":"E","l":1,"t":"Third Party Charging Grid","u":"https://forum.atherenergy.com/t/23946/33"},{"id":359294,"d":"2023-07-07","c":"E","l":19,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/7"},{"id":359636,"d":"2023-07-07","c":"E","l":10,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/14"},{"id":578146,"d":"2024-05-16","c":"E","l":2,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/13"},{"id":578227,"d":"2024-05-16","c":"E","l":2,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/15"},{"id":578280,"d":"2024-05-16","c":"E","l":2,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/18"},{"id":578885,"d":"2024-05-18","c":"E","l":5,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/22"},{"id":650544,"d":"2024-12-20","c":"E","l":4,"t":"Hero Vida Customers Blocking Ather Charging Points","u":"https://forum.atherenergy.com/t/296169/20"},{"id":655004,"d":"2025-01-06","c":"E","l":3,"t":"Ather Grid in Mumbai","u":"https://forum.atherenergy.com/t/14138/119"},{"id":812824,"d":"2026-01-27","c":"E","l":3,"t":"Is the new 6kw charger compatible with 450S","u":"https://forum.atherenergy.com/t/387032/1"},{"id":813231,"d":"2026-01-27","c":"E","l":2,"t":"Is the new 6kw charger compatible with 450S","u":"https://forum.atherenergy.com/t/387032/3"},{"id":820327,"d":"2026-02-08","c":"E","l":2,"t":"Is the new 6kw charger compatible with 450S","u":"https://forum.atherenergy.com/t/387032/12"},{"id":832419,"d":"2026-03-02","c":"E","l":4,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/4"},{"id":834228,"d":"2026-03-06","c":"E","l":10,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/16"},{"id":834363,"d":"2026-03-06","c":"E","l":4,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/18"},{"id":835189,"d":"2026-03-07","c":"E","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/23"},{"id":872002,"d":"2026-04-18","c":"E","l":1,"t":"Is the new 6kw charger compatible with 450S","u":"https://forum.atherenergy.com/t/387032/16"},{"id":871665,"d":"2026-04-18","c":"E","l":0,"t":"Discussion on the Ather Fast Charger","u":"https://forum.atherenergy.com/t/339742/32"},{"id":876902,"d":"2026-04-24","c":"E","l":0,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/78"},{"id":876917,"d":"2026-04-24","c":"E","l":0,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/79"},{"id":913294,"d":"2026-06-10","c":"E","l":3,"t":"Is the new 6kw charger compatible with 450S","u":"https://forum.atherenergy.com/t/387032/17"},{"id":942328,"d":"2026-07-15","c":"E","l":1,"t":"Is the new 6kw charger compatible with 450S","u":"https://forum.atherenergy.com/t/387032/22"},{"id":1006027,"d":"2026-10-06","c":"E","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/119"},{"id":359285,"d":"2023-07-07","c":"F","l":29,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/3"},{"id":359648,"d":"2023-07-07","c":"F","l":10,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/15"},{"id":578135,"d":"2024-05-16","c":"F","l":8,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/12"},{"id":626736,"d":"2024-10-03","c":"F","l":10,"t":"Hero Vida Customers Blocking Ather Charging Points","u":"https://forum.atherenergy.com/t/296169/3"},{"id":626783,"d":"2024-10-03","c":"F","l":6,"t":"Hero Vida Customers Blocking Ather Charging Points","u":"https://forum.atherenergy.com/t/296169/4"},{"id":627066,"d":"2024-10-04","c":"F","l":10,"t":"Hero Vida Customers Blocking Ather Charging Points","u":"https://forum.atherenergy.com/t/296169/6"},{"id":629379,"d":"2024-10-11","c":"F","l":4,"t":"Hero Vida Customers Blocking Ather Charging Points","u":"https://forum.atherenergy.com/t/296169/10"},{"id":642499,"d":"2024-11-19","c":"F","l":3,"t":"Hero Vida Customers Blocking Ather Charging Points","u":"https://forum.atherenergy.com/t/296169/17"},{"id":834362,"d":"2026-03-06","c":"F","l":8,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/17"},{"id":841011,"d":"2026-03-16","c":"F","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/33"},{"id":848159,"d":"2026-03-24","c":"F","l":3,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/894"},{"id":848567,"d":"2026-03-24","c":"F","l":1,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/895"},{"id":850390,"d":"2026-03-26","c":"F","l":6,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/897"},{"id":851205,"d":"2026-03-27","c":"F","l":3,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/898"},{"id":13167,"d":"2019-07-09","c":"G","l":0,"t":"Transaction Charges on Cards and Netbanking","u":"https://forum.atherenergy.com/t/1597/21"},{"id":583783,"d":"2024-05-28","c":"G","l":16,"t":"How a software ‘glitch’ left me stranded 60kms from bengaluru","u":"https://forum.atherenergy.com/t/276690/1"},{"id":602632,"d":"2024-07-09","c":"G","l":2,"t":"Ather android app 10.0.0","u":"https://forum.atherenergy.com/t/284337/25"},{"id":627207,"d":"2024-10-05","c":"G","l":1,"t":"Purchase process experience","u":"https://forum.atherenergy.com/t/14699/29"},{"id":673324,"d":"2025-03-06","c":"G","l":3,"t":"Ask an Ather Owner!","u":"https://forum.atherenergy.com/t/7843/449"},{"id":798838,"d":"2026-01-03","c":"G","l":2,"t":"Ather Grid Balance","u":"https://forum.atherenergy.com/t/299431/4"},{"id":833492,"d":"2026-03-04","c":"G","l":12,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/5"},{"id":833493,"d":"2026-03-04","c":"G","l":3,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/6"},{"id":836238,"d":"2026-03-09","c":"G","l":6,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/31"},{"id":865294,"d":"2026-04-10","c":"G","l":0,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/38"},{"id":870025,"d":"2026-04-16","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/46"},{"id":871002,"d":"2026-04-17","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/50"},{"id":871567,"d":"2026-04-17","c":"G","l":3,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/53"},{"id":872096,"d":"2026-04-18","c":"G","l":5,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/57"},{"id":873293,"d":"2026-04-20","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/59"},{"id":874005,"d":"2026-04-21","c":"G","l":4,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/62"},{"id":874027,"d":"2026-04-21","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/63"},{"id":874276,"d":"2026-04-21","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/67"},{"id":874541,"d":"2026-04-21","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/68"},{"id":874623,"d":"2026-04-21","c":"G","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/69"},{"id":874812,"d":"2026-04-22","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/72"},{"id":874823,"d":"2026-04-22","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/75"},{"id":878840,"d":"2026-04-27","c":"G","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/84"},{"id":879178,"d":"2026-04-27","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/85"},{"id":882273,"d":"2026-05-01","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/91"},{"id":882702,"d":"2026-05-02","c":"G","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/93"},{"id":883913,"d":"2026-05-04","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/95"},{"id":886051,"d":"2026-05-07","c":"G","l":2,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/901"},{"id":886166,"d":"2026-05-07","c":"G","l":1,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/902"},{"id":889385,"d":"2026-05-12","c":"G","l":1,"t":"450X General Service : Experiences and Reviews","u":"https://forum.atherenergy.com/t/18478/877"},{"id":895898,"d":"2026-05-20","c":"G","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/99"},{"id":901837,"d":"2026-05-27","c":"G","l":3,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/101"},{"id":906412,"d":"2026-06-02","c":"G","l":2,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/103"},{"id":913834,"d":"2026-06-11","c":"G","l":4,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/105"},{"id":944487,"d":"2026-07-18","c":"G","l":4,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/114"},{"id":998535,"d":"2026-09-24","c":"G","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/116"},{"id":1022211,"d":"2026-10-29","c":"G","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/121"},{"id":359296,"d":"2023-07-07","c":"H","l":20,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/8"},{"id":374373,"d":"2023-07-26","c":"H","l":104,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/4"},{"id":374549,"d":"2023-07-26","c":"H","l":31,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/10"},{"id":374616,"d":"2023-07-27","c":"H","l":28,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/14"},{"id":374617,"d":"2023-07-27","c":"H","l":12,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/15"},{"id":374635,"d":"2023-07-27","c":"H","l":15,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/17"},{"id":374679,"d":"2023-07-27","c":"H","l":17,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/19"},{"id":381958,"d":"2023-08-04","c":"H","l":3,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/184"},{"id":466874,"d":"2023-12-02","c":"H","l":1,"t":"No crowding at Ather Grids across Kerala","u":"https://forum.atherenergy.com/t/220557/20"},{"id":845590,"d":"2026-03-21","c":"H","l":3,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/36"},{"id":865771,"d":"2026-04-10","c":"H","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/40"},{"id":133713,"d":"2022-07-01","c":"I","l":7,"t":"Request to enable wifi on 450x","u":"https://forum.atherenergy.com/t/48768/1"},{"id":311818,"d":"2023-05-20","c":"I","l":3,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/7"},{"id":359474,"d":"2023-07-07","c":"I","l":14,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/13"},{"id":360002,"d":"2023-07-07","c":"I","l":12,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/22"},{"id":360472,"d":"2023-07-08","c":"I","l":2,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/47"},{"id":449249,"d":"2023-11-03","c":"I","l":1,"t":"Charging issues","u":"https://forum.atherenergy.com/t/199658/17"},{"id":604483,"d":"2024-07-20","c":"I","l":3,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/43"},{"id":643047,"d":"2024-11-21","c":"I","l":2,"t":"Ranebennur grid details not shown in app","u":"https://forum.atherenergy.com/t/303893/1"},{"id":656456,"d":"2025-01-10","c":"I","l":3,"t":"App Notification for new ATHER GRID ","u":"https://forum.atherenergy.com/t/308449/3"},{"id":819763,"d":"2026-02-07","c":"I","l":2,"t":"Long Rides, Made Predictable | 5000+ Ather Grids","u":"https://forum.atherenergy.com/t/389774/12"},{"id":851573,"d":"2026-03-27","c":"I","l":3,"t":"Charging at Ather Grid","u":"https://forum.atherenergy.com/t/292/899"},{"id":653315,"d":"2025-01-01","c":"J","l":5,"t":"Insurance? Stay Alert, Double Check before Availing 😵‍💫","u":"https://forum.atherenergy.com/t/252012/6"},{"id":685887,"d":"2025-04-21","c":"J","l":4,"t":"Dot charger not working ","u":"https://forum.atherenergy.com/t/324596/1"},{"id":693597,"d":"2025-05-23","c":"J","l":2,"t":"Charger Update every week is so annoying ","u":"https://forum.atherenergy.com/t/328358/1"},{"id":697237,"d":"2025-06-05","c":"J","l":4,"t":"Charger Update every week is so annoying ","u":"https://forum.atherenergy.com/t/328358/7"},{"id":696955,"d":"2025-06-05","c":"J","l":3,"t":"Charger Update every week is so annoying ","u":"https://forum.atherenergy.com/t/328358/6"},{"id":990974,"d":"2026-09-14","c":"J","l":0,"t":"Maintenance and Service","u":"https://forum.atherenergy.com/t/1072/1125"},{"id":359920,"d":"2023-07-07","c":"K","l":10,"t":"Ask Us Anything on Charging Infrastructure","u":"https://forum.atherenergy.com/t/168133/19"},{"id":581375,"d":"2024-05-23","c":"K","l":302,"t":"Optimized Charging with \"Custom Charging Completion Time\"","u":"https://forum.atherenergy.com/t/275551/1"},{"id":581785,"d":"2024-05-24","c":"K","l":11,"t":"Optimized Charging with \"Custom Charging Completion Time\"","u":"https://forum.atherenergy.com/t/275551/12"},{"id":582254,"d":"2024-05-24","c":"K","l":11,"t":"Optimized Charging with \"Custom Charging Completion Time\"","u":"https://forum.atherenergy.com/t/275551/18"},{"id":591832,"d":"2024-06-14","c":"K","l":4,"t":"Optimized Charging with \"Custom Charging Completion Time\"","u":"https://forum.atherenergy.com/t/275551/31"},{"id":374375,"d":"2023-07-26","c":"L","l":36,"t":"Charging without crowding","u":"https://forum.atherenergy.com/t/175586/5"},{"id":578097,"d":"2024-05-16","c":"L","l":7,"t":"Introducing Neighbourhood Charging","u":"https://forum.atherenergy.com/t/89645/10"},{"id":597293,"d":"2024-06-24","c":"L","l":4,"t":"Ather grid - Resource Being WASTED","u":"https://forum.atherenergy.com/t/276686/7"},{"id":819526,"d":"2026-02-07","c":"L","l":1,"t":"Is the new 6kw charger compatible with 450S","u":"https://forum.atherenergy.com/t/387032/11"},{"id":832403,"d":"2026-03-02","c":"L","l":9,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/3"},{"id":842367,"d":"2026-03-18","c":"L","l":3,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/35"},{"id":876757,"d":"2026-04-24","c":"L","l":1,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/77"},{"id":881292,"d":"2026-04-30","c":"L","l":0,"t":"Introducing Ather Wallet | Prepaid Charging at Ather Grids, Now Live!","u":"https://forum.atherenergy.com/t/396665/88"}];
+const T = {
+ A:['Society / RWA permission and install friction','Semi-private'],
+ B:['Shared metering, billing and building load','Semi-private'],
+ C:['Charger uptime: dead or "under maintenance" units','Public Grid'],
+ D:['Session will not start or drops','Home and public'],
+ E:['Interoperability: partner chargers, 6 kW, other OEMs','Public Grid'],
+ F:['Occupancy and fairness: blocked bays, queues','Public Grid'],
+ G:['Wallet and payment trust','Public Grid'],
+ H:['Pricing model: per minute vs per kWh','Public Grid'],
+ I:['Discovery and data accuracy: pins, live status','Home and public'],
+ J:['Home charger reliability and firmware updates','Home / private'],
+ K:['Charge control: finish time, target %, remote stop','Home / private'],
+ L:['Coverage gaps and slow site roll-out','Public Grid']};
+const $ = id => document.getElementById(id);
+const by = {};
+for (const x of D){ const b = by[x.c] ||= {n:0,r:0,l:0,top:0}; b.n++; if(x.d>='2025') b.r++; b.l+=x.l; b.top=Math.max(b.top,x.l); }
+const codes = Object.keys(by).sort((a,b)=>by[b].n-by[a].n), max = by[codes[0]].n;
+$('rows').innerHTML = codes.map(c=>{const b=by[c];return `<div class="row" data-c="${c}"><div class="lab">${T[c][0]}<small>${T[c][1]}</small></div><div class="track" style="width:${(b.n/max*100).toFixed(1)}%">${b.r?`<div class="seg s1" style="flex:${b.r}"></div>`:''}${b.n-b.r?`<div class="seg s2" style="flex:${b.n-b.r}"></div>`:''}</div><div class="n">${b.n}</div></div>`}).join('');
+const tip = $('tip');
+$('rows').addEventListener('pointermove', e=>{const r=e.target.closest('.row'); if(!r){tip.style.opacity=0;return} const b=by[r.dataset.c]; tip.textContent=`${b.n} posts (${b.r} in 2025–26) · ${b.l} upvotes · top post ${b.top}`; tip.style.left=Math.min(e.clientX+14,innerWidth-280)+'px'; tip.style.top=(e.clientY+16)+'px'; tip.style.opacity=1});
+$('rows').addEventListener('pointerleave', ()=>tip.style.opacity=0);
+const threads = new Set(D.map(x=>x.t)).size, semi = D.filter(x=>'AB'.includes(x.c)).length;
+$('stats').innerHTML = [[D.length,'owner posts coded by hand'],[threads,'forum threads, 2018 to 2026'],[semi,'posts on society and shared-parking friction'],[Math.max(...D.map(x=>x.l)),'upvotes for a custom finish time']].map(([v,l])=>`<div><b>${v}</b><span>${l}</span></div>`).join('');
+
+const Q = [
+ ['A',"my society is not allowing me to install charging socket",'2021-01',0,'https://forum.atherenergy.com/t/1915/101'],
+ ['A',"They were not allowing me to setup a 15 Amps socket in my parking area",'2020-10',5,'https://forum.atherenergy.com/t/9799/1'],
+ ['B',"504 flats and there are only two EV users including me",'2020-10',5,'https://forum.atherenergy.com/t/9799/5'],
+ ['B',"Rs15 per unit for slow charging. That’s not imaginable.",'2023-03',3,'https://forum.atherenergy.com/t/89645/5'],
+ ['C',"half the time they work and it’s like playing Russian roulette",'2024-02',11,'https://forum.atherenergy.com/t/239652/1'],
+ ['C',"One is not working from more than a week",'2023-07',22,'https://forum.atherenergy.com/t/175586/9'],
+ ['D',"we need to hold the connector until its locked at the grids",'2025-02',3,'https://forum.atherenergy.com/t/291388/226'],
+ ['D',"repeatedly showing intialising message in a loop",'2025-09',4,'https://forum.atherenergy.com/t/199658/54'],
+ ['E',"why do you guys even show Vida Grids in your app as Nearby chargers",'2026-03',10,'https://forum.atherenergy.com/t/396665/16'],
+ ['F',"now I have to wait for 90 min to get my vehicle charged",'2024-10',4,'https://forum.atherenergy.com/t/296169/10'],
+ ['G',"then why did you put it in my wallet?",'2026-05',2,'https://forum.atherenergy.com/t/396665/95'],
+ ['H',"Charges based on time is worst. Charging times are unpredictable.",'2023-07',31,'https://forum.atherenergy.com/t/175586/10'],
+ ['I',"Many grid points are not precisely marked in the maps.",'2023-07',14,'https://forum.atherenergy.com/t/168133/13'],
+ ['J',"My charger has been successfully updated to not work anymore.",'2025-06',4,'https://forum.atherenergy.com/t/328358/7'],
+ ['K',"set a custom time for our Ather scooter to reach 100% charge",'2024-05',302,'https://forum.atherenergy.com/t/275551/1'],
+ ['K',"5 am is rubbish.",'2024-05',11,'https://forum.atherenergy.com/t/275551/18'],
+ ['L',"The ratio for the Ather EV’s as of the Ather grid is still very less",'2023-07',36,'https://forum.atherenergy.com/t/175586/5']];
+const mon = m => new Date(m+'-01').toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+$('wall').innerHTML = Q.map(([c,q,d,l,u])=>`<a class="qc" href="${u}"><span class="tag">${T[c][0].split(':')[0]}</span><p>“${q}”</p><span>Forum post, ${mon(d)} · ${l} upvote${l===1?'':'s'}</span></a>`).join('');
+const step = () => Math.min($('wall').clientWidth*0.8, 640);
+$('prev').addEventListener('click', ()=>$('wall').scrollBy({left:-step(),behavior:'smooth'}));
+$('next').addEventListener('click', ()=>$('wall').scrollBy({left:step(),behavior:'smooth'}));
+
+const cc = [
+ ['Gateway loses its network link in a basement','Chargers keep running on cached authorisation and a local fair-share schedule; sessions sync and bill once the link returns.','Owners in basements unable to see charge status'],
+ ['Building hits its sanctioned-load cap at peak','Curtail first where the rider has the most spare time before their "Ready by" time, not first-come; push the new expected finish time.','302 upvotes for a custom finish time'],
+ ['Power cut or voltage dip mid-session','Resume automatically once supply is stable; never bill dead time; log the event against the site.','A home session left at "not charging" after supply fluctuations'],
+ ['Connector inserted but no handshake or lock','Retry the handshake, then show a specific fault code on the charger and in the app; count it as a failed start.','Holding the connector until it locks; "initialising" loops'],
+ ['Firmware update interrupted or bad build','A/B partition with automatic rollback; staged rollout; never update during a session.','Home chargers left with the fan running after an update'],
+ ['Society meter does not match the bills','Per-session kWh receipt; monthly variance against the society sub-meter, flagged above a set threshold.','Per-unit billing disputes in shared parking'],
+ ['Bay occupied by a fully charged vehicle','Idle notice to the rider, then an idle fee or release rule set by the society.','Blocked bays and 90-minute waits'],
+ ['Non-Ather EV on a shared charger','Allow-list set by the society; clear tariff shown before the session starts.','Billing complaints about partner networks']];
+$('cc').innerHTML = cc.map(([a,b,c])=>`<details><summary>${a}</summary><div class="body"><div><b>Expected behaviour</b>${b}</div><div><b>Forum evidence</b>${c}</div></div></details>`).join('');
+
+const tree = [['First-plug start success','sessions that start within 30 s of plug-in'],['Connection drop-off rate','sessions ending before target with no user stop'],['Gateway and charger uptime','online minutes over scheduled minutes, per site'],['Curtailment impact','minutes of delay per session caused by load caps'],['Billing dispute rate','tickets per 1,000 sessions'],['Activation and adoption','days from enquiry to first session; WAU/MAU of "Ready by"']];
+$('tree').innerHTML = tree.map(([a,b])=>`<div><b>${a}</b>${b}</div>`).join('');
+
+const ship = [['"Ready by" time and target %','set per parking spot; the load scheduler treats it as a hard constraint.'],['One receipt for rider and society','kWh, minutes and any curtailment with its reason, for every session.'],['Society activation kit','load sheet, earthing and safety checklist, and a DISCOM and metering note, generated from the building\'s sanctioned load.'],['Offline-first gateway','cached authorisation and fair-share scheduling, so basement sessions survive network loss.']];
+$('ship').innerHTML = ship.map(([a,b],i)=>`<div><i>${i+1}</i><p><b>${a}:</b> ${b}</p></div>`).join('');
+
+const hy = [
+ ['Society approval, not price, is the main blocker to semi-private charging','Ask 3 facility managers for their last approval timeline and the objections raised','Two of three name cost first, ahead of safety or load'],
+ ['Riders will set a "Ready by" time when it is offered','Ask 5 riders when they leave home and how they charge today','Most plug in on arrival and never think about the finish time'],
+ ['Managed load lets a building electrify far more spots without extra sanctioned load','Get one real building\'s sanctioned load and EV count, and run the model above','That DISCOM requires the full connected load anyway'],
+ ['Builders want EV-ready parking as a sales feature','Ask 2 builders whether buyers ask for it','Neither has had a buyer ask']];
+$('hy').innerHTML = hy.map(r=>`<tr>${r.map(v=>`<td>${v}</td>`).join('')}</tr>`).join('');
+
+const calc = () => {
+  const ev=+$('ev').value, km=+$('km').value, wh=+$('wh').value, hr=+$('hr').value, w=+$('w').value;
+  $('evo').textContent=ev; $('kmo').textContent=km+' km'; $('who').textContent=wh+' Wh/km'; $('hro').textContent=hr+' h'; $('wo').textContent=w+' W';
+  const np = ev*w/1000, need = ev*km*wh/1000/hr;
+  $('kb1').style.width='100%'; $('kb1').textContent=`All chargers at full power: ${np.toFixed(0)} kW`;
+  $('kb2').style.width=Math.max(need/np*100,2).toFixed(1)+'%'; $('kb2').textContent=`Scheduled: ${need.toFixed(need<10?1:0)} kW`;
+  $('ratio').textContent=(np/need).toFixed(1)+'×';
+};
+for (const id of ['ev','km','wh','hr','w']) $(id).addEventListener('input', calc);
+calc();
+
+const flt = $('flt');
+flt.innerHTML += codes.map(c=>`<option value="${c}">${T[c][0]} (${by[c].n})</option>`).join('');
+const esc = s => s.replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+const list = () => { const v=flt.value; $('list').innerHTML = D.filter(x=>!v||x.c===v).sort((a,b)=>b.d.localeCompare(a.d)).map(x=>`<tr><td style="white-space:nowrap">${x.d}</td><td>${T[x.c][0]}</td><td><a href="${esc(x.u)}">${esc(x.t)}</a></td><td style="text-align:right">${x.l}</td></tr>`).join(''); };
+flt.addEventListener('change', list); list();
+}
+</script>
+</body>
+</html>
